@@ -1,4 +1,4 @@
-package qrmatrix
+package datatype
 
 /*
 #cgo pkg-config: libqrencode
