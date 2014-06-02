@@ -25,3 +25,8 @@ func Next() {
 func Code() *QRcode {
 	return CreateQRCode(qrcodeList.code)
 }
+
+// Free frees the QR Code List
+func Free() {
+	C.QRcode_List_free(qrcodeList)
+}
