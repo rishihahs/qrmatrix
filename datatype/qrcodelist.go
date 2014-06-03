@@ -10,6 +10,7 @@ import "C"
 import "unsafe"
 
 var qrcodeList *C.QRcode_List
+var qrcode *QRcode
 
 // CreateQRCodes creates multiple QR Codes using structured append
 func CreateQRCodes(data []byte) {
@@ -19,11 +20,25 @@ func CreateQRCodes(data []byte) {
 // Next increments QRcode_List pointer to the next element
 func Next() {
 	qrcodeList = (*C.QRcode_List)(qrcodeList.next)
+	qrcode = nil
 }
 
 // Code returns a QRcode struct of the QR Code
 func Code() *QRcode {
-	return CreateQRCode(qrcodeList.code)
+	if qrcodeList == nil {
+		return nil
+	}
+
+	if qrcode == nil {
+		qrcode = CreateQRCode(qrcodeList.code)
+	}
+
+	return qrcode
+}
+
+// Size returns the size of the QR Code List
+func Size() int {
+	return int(C.QRcode_List_size(qrcodeList))
 }
 
 // Free frees the QR Code List
