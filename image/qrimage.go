@@ -19,9 +19,6 @@ const (
 
 	// CodesPerRow is the the number of QR Codes per row
 	CodesPerRow = 2
-
-	// DPI Dots per inch
-	DPI = 72
 )
 
 var white = color.RGBA{R: uint8(255), G: uint8(255), B: uint8(255), A: uint8(255)}
@@ -29,7 +26,11 @@ var black = color.RGBA{R: uint8(0), G: uint8(0), B: uint8(0), A: uint8(255)}
 
 // CreateImage creates the QR Code Matrix image
 func CreateImage() {
-	img := image.NewRGBA(image.Rect(0, 0, datatype.Code().Width*ModuleSize+Margin*2*ModuleSize, datatype.Code().Width*ModuleSize+Margin*2*ModuleSize))
+	// Create a new image
+	totalwidth := datatype.Code().Width*ModuleSize + Margin*2*ModuleSize
+	img := image.NewRGBA(image.Rect(0, 0, totalwidth, totalwidth))
+
+	// Fill the image with white
 	fill := uint8(255)
 	for i := 0; i < len(img.Pix); i++ {
 		img.Pix[i] = fill
