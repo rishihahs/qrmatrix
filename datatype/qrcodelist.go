@@ -21,6 +21,7 @@ func CreateQRCodes(data []byte) {
 func Next() {
 	qrcodeList = (*C.QRcode_List)(qrcodeList.next)
 	qrcode = nil
+	Code()
 }
 
 // Code returns a QRcode struct of the QR Code
