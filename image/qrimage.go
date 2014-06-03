@@ -64,10 +64,17 @@ func CreateImage(moduleSize, codesPerRow int, location string) {
 
 	datatype.Free()
 
-	fo, err := os.Create(location)
+	var fo *os.File
+	var err error
+	if len(location) != 0 {
+		fo, err = os.Create(location)
+	} else {
+		fo = os.Stdout
+	}
 	if err != nil {
 		panic(err)
 	}
+
 	// close fo on exit and check for its returned error
 	defer func() {
 		if err := fo.Close(); err != nil {
