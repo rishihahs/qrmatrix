@@ -20,6 +20,12 @@ var black = color.RGBA{R: uint8(0), G: uint8(0), B: uint8(0), A: uint8(255)}
 func CreateImage(moduleSize, codesPerRow int, location string) {
 	// Create a new image
 	size := datatype.Size()
+
+	// Codes per row should not be larger than size of total qr codes
+	if codesPerRow > size {
+		codesPerRow = size
+	}
+
 	singlewidth := datatype.Code().Width*moduleSize + Margin*2*moduleSize
 	totalwidth := singlewidth * codesPerRow
 	totalheight := singlewidth * (size/codesPerRow + size%2)
