@@ -26,9 +26,14 @@ func CreateImage(moduleSize, codesPerRow int, location string) {
 		codesPerRow = size
 	}
 
+	// Calculate Sizes
 	singlewidth := datatype.Code().Width*moduleSize + Margin*2*moduleSize
 	totalwidth := singlewidth * codesPerRow
 	totalheight := singlewidth * (size/codesPerRow + size%2)
+	if size == 1 {
+		totalheight -= singlewidth
+	}
+
 	img := image.NewRGBA(image.Rect(0, 0, totalwidth, totalheight))
 
 	// Fill the image with white
